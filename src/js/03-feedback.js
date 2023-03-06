@@ -11,13 +11,6 @@ const refs = {
     email: document.querySelector('.feedback-form input'),
 }
 
-refs.form.addEventListener('submit', onFormSubmit);
-refs.form.addEventListener('input', throttle(onInput, 500));
-
-refs.form.addEventListener('input', e => {
-    formData[e.target.name] = e.target.value;
-});
-
 startFormInput();
 
 function onInput(e) {
@@ -33,8 +26,9 @@ function onFormSubmit(e) {
 
     console.log(formData);
 
-    e.currentTaget.reset();
+    e.currentTarget.reset();
     localStorage.removeItem(STORAGE_KEY);
+    return;
 }
 
 function startFormInput() {
@@ -49,5 +43,9 @@ function startFormInput() {
   }
 }
 
+refs.form.addEventListener('submit', onFormSubmit);
+refs.form.addEventListener('input', throttle(onInput, 500));
 
-
+refs.form.addEventListener('input', e => {
+    formData[e.target.name] = e.target.value;
+});
